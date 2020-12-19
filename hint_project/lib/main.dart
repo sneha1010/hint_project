@@ -1,21 +1,47 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:provider/provider.dart';
 import 'StartPage.dart';
 import 'constant.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  @override
+  void initState() {
+    super.initState();
+    Firebase.initializeApp().whenComplete(() {
+      print("completed");
+      setState(() {});
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Registry(),
+    Firebase.initializeApp();
+    return MultiProvider(
+      providers: [
+        StreamProvider<User>.value(value:
+//        AuthService().user,
+        FirebaseAuth.instance.authStateChanges(),
+        ),
+      ],
+      child: MaterialApp(
+        home: Registry(),
+      ),
     );
   }
 }
+
 class Registry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -29,7 +55,8 @@ class Registry extends StatelessWidget {
                 height: double.infinity,
               ),
               Stack(
-                  children: [Container(
+                  children: [
+                    Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
                     decoration: BoxDecoration(
