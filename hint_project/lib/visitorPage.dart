@@ -6,6 +6,8 @@ import 'package:hint_project/main.dart';
 import 'package:hint_project/StartPage.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:hint_project/AddVisitor.dart';
+
+import 'ScanPage.dart';
 class VisitorPage extends StatefulWidget {
   String name;
   VisitorPage(this.name);
@@ -30,6 +32,7 @@ class _VisitorPageState extends State<VisitorPage> {
           padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 30),
           child: Column(
             children: [
+           //   Icon(Icons.qr_code_scanner),
               Heading(
                 heading:widget.name,
 
@@ -38,13 +41,24 @@ class _VisitorPageState extends State<VisitorPage> {
                 //plce where the QR Image will be shown
                 data: widget.name,
               ),
-              Text(
-                'Scan QR code',
-                style: GoogleFonts.roboto(
-                    textStyle: TextStyle(color: Colors.black)),
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) {
+                        return ScanPage();
+                      }
+                      ));
+                },
+                child: Text(
+                  'Scan QR code',
+                  style: GoogleFonts.roboto(
+                      textStyle: TextStyle(
+                        fontSize: 18,
+                          color: Color(0xff24B873))),
+                ),
               ),
               SizedBox(
-                height: 59,
+                height: 30,
               ),
               FlatButton(
                   onPressed: () {
@@ -58,7 +72,7 @@ class _VisitorPageState extends State<VisitorPage> {
                     text: 'Add Visitor',
                   )),
               SizedBox(
-                height: 30,
+                height: 20,
               ),
              
              
