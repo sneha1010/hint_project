@@ -33,13 +33,24 @@ class DatabaseService {
 
 
 
-  Future<void> addUser(dynamic user ) {
-    return userCollection
+  Future<void> addUser(String location,String name,String phone,String email ) async{
+    print('why is it not working   ');
+
+    return await userCollection
         .doc(uid)
-        .set(user);
+        .set(
+      {
+        'name':name,
+        'phoneNumber':phone,
+        'email':email,
+        'location':location,
+        'uid':uid
+      }
+    );
   }
 
   Future<void> addvisitor( {String phoneNo,String name,String location}) {
+
     return userCollection
         .doc(uid)
         .collection('visitors')

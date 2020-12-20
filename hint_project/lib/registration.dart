@@ -25,18 +25,11 @@ class _RegisterPageState extends State<RegisterPage> {
   bool _validate = false;
   @override
   Widget build(BuildContext context) {
-    Future<void> adddetails(){
-      var user=Provider.of<User>(context);
+    Future<void> adddetails(String phone,String loc,String nam){
+      var user=Provider.of<User>(context,listen: false);
       DatabaseService _db =DatabaseService(user.uid);
-      return _db.addUser({
-        'name': name??'',
-        'phoneNumber':phoneNo??'',
-        'uid': user.uid ?? '',
-        'email': user.email ?? '',
-
-      }).then((value) async {
-//        SharedPreferences prefs = await SharedPreferences.getInstance();
-//        prefs.setString('uid', user.uid);
+      print('here 2 ${user.uid}');
+      return _db.addUser(loc,nam,phone,user.email).then((value) async {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => VisitorPage(name)),
@@ -68,6 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Column(
                       children: [
                         TextFormField(
+                          keyboardType: TextInputType.text,
                           controller: nameController,
                           validator: (v)=>v.isEmpty?'enter the name':null,
                           decoration: InputDecoration(
@@ -85,6 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           height: 10,
                         ),
                     TextFormField(
+                      keyboardType: TextInputType.number,
                       validator: (v)=>v.isEmpty?'Please provide phone number':null,
                       onChanged: (value){
                         phoneNo=value;
@@ -101,6 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           height: 10,
                         ),
                     TextFormField(
+                      keyboardType: TextInputType.emailAddress,
                       validator: (v)=>v.isEmpty?'Please provide an email ':null,
                       onChanged: (value){
                         email=value;
@@ -178,7 +174,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                     content: Text(
                                         error)));
                               } else {
-                                adddetails();
+                                print('i am here');
+                                adddetails(phoneNo, location, name);
+//                                registerUser(phoneNo: phoneNo,name: name,location: location,);
                               }
                             }else{
                               print('hi');
@@ -261,3 +259,44 @@ class GreenContainer extends StatelessWidget {
   }
 }
 
+//class registerUser extends StatelessWidget {
+//final String phoneNo;
+//final String name;
+//final String location;
+//
+//  const registerUser({Key key, this.phoneNo, this.name, this.location}) : super(key: key);
+//  @override
+//  Widget build(BuildContext context) {
+//
+//    var user=Provider.of<User>(context);
+//    DatabaseService _db =DatabaseService(user.uid);
+////    _db.addUser();
+//    print('sdfg                       ${user.uid}');
+//    Future<void> registerUser() {
+//      return _db.addUser({
+//        'name': name??'',
+//        'phoneNumber':phoneNo??'',
+//        'uid': user.uid ?? '',
+//        'email': user.email ?? '',
+//
+//      }).then((value) async {
+////        SharedPreferences prefs = await SharedPreferences.getInstance();
+////        prefs.setString('uid', user.uid);
+//        Navigator.pushReplacement(
+//          context,
+//          MaterialPageRoute(builder: (context) => VisitorPage(name)),
+//        );
+//      }).catchError(
+//
+//            (error) => print("Some error occured while registering"),
+//      );
+//    }
+//
+//
+//
+//
+//     registerUser();
+//
+//    return null;
+//  }
+//}/**/

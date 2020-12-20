@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 //import 'package:hint_project/Registration.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -43,6 +44,7 @@ class _LogInState extends State<LogIn> {
                           onChanged: (v){
                             email=v;
                           },
+                          keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
 
                             //border: InputBorder.none,
