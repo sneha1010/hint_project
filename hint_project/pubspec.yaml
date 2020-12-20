@@ -36,6 +36,7 @@ dependencies:
   provider: ^4.3.2+3
   shared_preferences: ^0.5.12+4
 #  barcode_scan: ^0.0.4
+  flutter_barcode_scanner: ^1.0.1
   #qr_flutter: ^1.1.1
   qr_flutter:
     git:
