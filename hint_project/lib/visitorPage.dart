@@ -10,6 +10,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:hint_project/AddVisitor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'ScanPage.dart';
+import 'dashboard.dart';
 class VisitorPage extends StatefulWidget {
 
   @override
@@ -87,10 +88,19 @@ class _VisitorPageState extends State<VisitorPage> {
               ),
              
              
-              BlackContainer(
-                text: 'Show Visitor',
-                width: 260,
-                colour: Color(0xff131A22),
+              FlatButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) {
+                        return dahboard();
+                      }
+                      ));
+                },
+                child: BlackContainer(
+                  text: 'Show Visitor',
+                  width: 260,
+                  colour: Color(0xff131A22),
+                ),
               )
             ],
           ),
