@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hint_project/constant.dart';
 import 'package:hint_project/main.dart';
@@ -33,6 +34,8 @@ class _VisitorPageState extends State<VisitorPage> {
        // already generated qr code when the page opens
 
  bool isvisible = false;
+ String qrCodeResult = "Not Yet Scanned";
+
   @override
   Widget build(BuildContext context) {
     var user=Provider.of<User>(context,listen: false);
@@ -54,13 +57,24 @@ class _VisitorPageState extends State<VisitorPage> {
                 data: user.uid,
               ),
               GestureDetector(
-                onTap: (){
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) {
-                        return ScanPage();
-                      }
-                      ));
-                },
+    onTap: () async {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) {
+            return ScanPage();
+          }
+          ));
+
+      String codeSanner = await FlutterBarcodeScanner.scanBarcode("#ff6666", "Cancel", false, ScanMode.DEFAULT);    //barcode scnner
+      setState(() {
+        qrCodeResult = codeSanner;
+        //  _getTime();
+      }
+      );
+
+
+
+
+    },
                 child: Text(
                   'Scan QR code',
                   style: GoogleFonts.roboto(
@@ -88,19 +102,10 @@ class _VisitorPageState extends State<VisitorPage> {
               ),
              
              
-              FlatButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) {
-                        return dahboard();
-                      }
-                      ));
-                },
-                child: BlackContainer(
-                  text: 'Show Visitor',
-                  width: 260,
-                  colour: Color(0xff131A22),
-                ),
+              BlackContainer(
+                text: 'Show Visitor',
+                width: 260,
+                colour: Color(0xff131A22),
               )
             ],
           ),
