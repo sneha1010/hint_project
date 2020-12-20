@@ -32,7 +32,7 @@ class _RegisterPageState extends State<RegisterPage> {
       return _db.addUser(loc,nam,phone,user.email).then((value) async {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => VisitorPage(name)),
+          MaterialPageRoute(builder: (context) => VisitorPage()),
         );
       }).catchError(
             (error) => print("Some error occured while registering"),

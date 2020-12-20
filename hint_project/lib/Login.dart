@@ -9,6 +9,7 @@ import 'package:hint_project/registration.dart';
 import 'package:hint_project/visitorPage.dart';
 import 'services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+//import 'visitorPage.dart';
 class LogIn extends StatefulWidget {
   @override
   _LogInState createState() => _LogInState();
@@ -91,7 +92,7 @@ class _LogInState extends State<LogIn> {
 //                                  email: email, password: password);
                                       Navigator.pushReplacement(context, MaterialPageRoute(
                                         builder: (context) {
-                                          return GeneratePage();
+                                          return VisitorPage();
                                         },
                                       ));
                                     } on FirebaseAuthException catch (e) {

@@ -2,30 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hint_project/constant.dart';
 import 'package:hint_project/main.dart';
-
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'services/db.dart';
 import 'package:hint_project/StartPage.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:hint_project/AddVisitor.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'ScanPage.dart';
 class VisitorPage extends StatefulWidget {
-  String name;
-  VisitorPage(this.name);
+
   @override
 
   _VisitorPageState createState() => _VisitorPageState();
 }
 
 class _VisitorPageState extends State<VisitorPage> {
+  String name;
 
 
+  Future<void> getDataFromFirestore(String uid) {
+    FirebaseFirestore.instance.collection('users').doc(uid).get().then((doc) {
+      setState(() {
+        name = doc.get('name');
+      });
+    });
+  }
 // String qrData=widget.name ;
        // already generated qr code when the page opens
 
  bool isvisible = false;
-
   @override
   Widget build(BuildContext context) {
+    var user=Provider.of<User>(context,listen: false);
+    DatabaseService _db =DatabaseService(user.uid);
+    getDataFromFirestore(user.uid);
     return Scaffold(
       body: Container(
         child: Padding(
@@ -34,12 +45,12 @@ class _VisitorPageState extends State<VisitorPage> {
             children: [
            //   Icon(Icons.qr_code_scanner),
               Heading(
-                heading:widget.name,
+                heading:name,
 
               ),
               QrImage(
                 //plce where the QR Image will be shown
-                data: widget.name,
+                data: user.uid,
               ),
               GestureDetector(
                 onTap: (){
@@ -64,7 +75,7 @@ class _VisitorPageState extends State<VisitorPage> {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                          return AddVisitorPage(widget.name);
+                          return AddVisitorPage(name);
                         }
                         ));
                   },
