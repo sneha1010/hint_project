@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hint_project/constant.dart';
 import 'package:hint_project/main.dart';
@@ -23,6 +24,7 @@ class _VisitorPageState extends State<VisitorPage> {
        // already generated qr code when the page opens
 
  bool isvisible = false;
+ String qrCodeResult = "Not Yet Scanned";
 
   @override
   Widget build(BuildContext context) {
@@ -42,13 +44,20 @@ class _VisitorPageState extends State<VisitorPage> {
                 data: widget.name,
               ),
               GestureDetector(
-                onTap: (){
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) {
-                        return ScanPage();
-                      }
-                      ));
-                },
+    onTap: () async {
+
+
+      String codeSanner = await FlutterBarcodeScanner.scanBarcode("#ff6666", "Cancel", false, ScanMode.DEFAULT);    //barcode scnner
+      setState(() {
+        qrCodeResult = codeSanner;
+        //  _getTime();
+      }
+      );
+
+
+
+
+    },
                 child: Text(
                   'Scan QR code',
                   style: GoogleFonts.roboto(
